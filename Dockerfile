@@ -20,8 +20,7 @@ RUN for f in "/home/user" "/etc/passwd" "/etc/group" "/projects"; do\
         # Generate group.template \
         cat /etc/group | \
         sed s#root:x:0:#root:x:0:0,\${USER_ID}:#g \
-        > /home/user/group.template && \
-        sudo sed -ri 's/StrictModes yes/StrictModes no/g' /etc/ssh/sshd_config
+        > /home/user/group.template
 
 COPY ["entrypoint.sh","/home/user/entrypoint.sh"]
 
