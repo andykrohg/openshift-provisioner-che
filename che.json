@@ -1,0 +1,60 @@
+{
+    "defaultEnv": "default",
+    "environments": {
+      "default": {
+        "machines": {
+          "new-machine": {
+            "attributes": {
+              "memoryLimitBytes": "2147483648"
+            },
+            "servers": {},
+            "volumes": {},
+            "installers": [
+              "org.eclipse.che.terminal",
+              "org.eclipse.che.exec",
+              "org.eclipse.che.ws-agent"
+            ],
+            "env": {}
+          }
+        },
+        "recipe": {
+          "type": "dockerimage",
+          "content": "quay.io/akrohg/openshift-provisioner-che",
+          "contentType": ""
+        }
+      }
+    },
+    "projects": [
+      {
+        "links": [],
+        "name": "openshift-provision",
+        "attributes": {
+          "contribute_to_branch": [
+            "master"
+          ],
+          "commands": [
+            "{\"commandLine\":\"cd ${current.project.path};\\nexport $(grep -v '^#' vars/aws.example.env | xargs);\\nansible-playbook playbooks/aws/provision.yml -e keys_dir=playbooks/aws/keys -e @vars/aws.example.yml\", \"name\":\"provision\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"\"}, \"type\":\"custom\"}",
+            "{\"commandLine\":\"cd ${current.project.path};\\nexport $(grep -v '^#' vars/aws.example.env | xargs);\\nansible-playbook playbooks/aws/start_instances.yml -e keys_dir=playbooks/aws/keys -e @vars/aws.example.yml\", \"name\":\"start\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"\"}, \"type\":\"custom\"}",
+            "{\"commandLine\":\"cd ${current.project.path};\\nexport $(grep -v '^#' vars/aws.example.env | xargs);\\nansible-playbook playbooks/aws/stop_instances.yml -e keys_dir=playbooks/aws/keys -e @vars/aws.example.yml\", \"name\":\"stop\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"\"}, \"type\":\"custom\"}"
+          ]
+        },
+        "type": "blank",
+        "source": {
+          "location": "https://github.com/jaredhocutt/openshift-provision.git",
+          "type": "git",
+          "parameters": {}
+        },
+        "path": "/openshift-provision",
+        "problems": [],
+        "mixins": [
+          "pullrequest"
+        ]
+      }
+    ],
+    "name": "openshift-provisioner",
+    "attributes": {
+      "persistVolumes": "true"
+    },
+    "commands": [],
+    "links": []
+  }
