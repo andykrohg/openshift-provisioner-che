@@ -1,60 +1,61 @@
 {
-    "defaultEnv": "default",
-    "environments": {
-      "default": {
-        "machines": {
-          "new-machine": {
-            "attributes": {
-              "memoryLimitBytes": "2147483648"
-            },
-            "servers": {},
-            "volumes": {},
-            "installers": [
-              "org.eclipse.che.terminal",
-              "org.eclipse.che.exec",
-              "org.eclipse.che.ws-agent"
-            ],
-            "env": {}
-          }
-        },
-        "recipe": {
-          "type": "dockerimage",
-          "content": "quay.io/akrohg/openshift-provisioner-che",
-          "contentType": ""
-        }
-      }
-    },
-    "projects": [
+  "projects": [
       {
-        "links": [],
-        "name": "openshift-provision",
-        "attributes": {
-          "contribute_to_branch": [
-            "master"
-          ],
-          "commands": [
+        "options": {},
+        "projects": [],
+        "commands": [
             "{\"commandLine\":\"cd ${current.project.path};\\nexport $(grep -v '^#' vars/aws.example.env | xargs);\\nansible-playbook playbooks/aws/provision.yml -e keys_dir=playbooks/aws/keys -e @vars/aws.example.yml\", \"name\":\"provision\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"\"}, \"type\":\"custom\"}",
             "{\"commandLine\":\"cd ${current.project.path};\\nexport $(grep -v '^#' vars/aws.example.env | xargs);\\nansible-playbook playbooks/aws/start_instances.yml -e keys_dir=playbooks/aws/keys -e @vars/aws.example.yml\", \"name\":\"start\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"\"}, \"type\":\"custom\"}",
             "{\"commandLine\":\"cd ${current.project.path};\\nexport $(grep -v '^#' vars/aws.example.env | xargs);\\nansible-playbook playbooks/aws/stop_instances.yml -e keys_dir=playbooks/aws/keys -e @vars/aws.example.yml\", \"name\":\"stop\", \"attributes\":{\"goal\":\"Run\", \"previewUrl\":\"\"}, \"type\":\"custom\"}"
-          ]
-        },
-        "type": "blank",
-        "source": {
-          "location": "https://github.com/jaredhocutt/openshift-provision.git",
-          "type": "git",
-          "parameters": {}
-        },
-        "path": "/openshift-provision",
+        ],
+        "links": [],
+        "mixins": [],
         "problems": [],
-        "mixins": [
-          "pullrequest"
-        ]
+        "category": "",
+        "description": "",
+        "source": {
+            "location": "https://github.com/jaredhocutt/openshift-provision.git",
+            "type": "git",
+            "parameters": {}
+        },
+        "displayName": "openshift-provision",
+        "tags": [
+            "blank"
+        ],
+        "name": "openshift-provision",
+        "path": "/openshift-provision",
+        "attributes": {}
+    }
+  ],
+  "commands": [],
+  "defaultEnv": "default",
+  "environments": {
+    "default": {
+      "recipe": {
+          "type": "dockerimage",
+          "content": "quay.io/akrohg/openshift-provisioner-che"
+      },
+      "machines": {
+        "dev-machine": {
+          "servers": {},
+          "installers": [
+            "org.eclipse.che.exec",
+            "org.eclipse.che.terminal",
+            "org.eclipse.che.ws-agent",
+            "org.eclipse.che.ls.java",
+            "com.redhat.bayesian.lsp",
+            "com.redhat.oc-login"
+          ],
+          "volumes": {},
+          "env": {},
+          "attributes": {
+            "memoryLimitBytes": "2147483648"
+          }
+        }
       }
-    ],
-    "name": "openshift-provisioner",
-    "attributes": {
-      "persistVolumes": "true"
-    },
-    "commands": [],
-    "links": []
-  }
+    }
+  },
+  "name": "openshift-provisioner",
+  "attributes": {},
+  "links": []
+}

@@ -2,7 +2,7 @@ FROM quay.io/jhocutt/openshift-provision:latest
 
 EXPOSE 4403 22
 
-RUN yum install -y sudo java-1.8.0-openjdk-devel && sudo echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+RUN yum install -y sudo procps java-1.8.0-openjdk-devel && sudo echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     useradd -u 1000 -G users,wheel,root -d /home/user --shell /bin/bash -m user
 
 USER user
